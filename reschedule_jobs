@@ -19,3 +19,5 @@ echo "" >> $CYBPATH/cjobs.txt
 
 #schedule the cron jobs from the file cybrary_cron.txt
 crontab $CYBPATH/cjobs.txt 2>> $CYBPATH/cron_out
+
+rm $CYBPATH/cjobs.txt

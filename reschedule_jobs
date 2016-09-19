@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+CYBPATH="/home/networking/Desktop/ks/iiit/network_sec/cybrary"
+
+#get the next date
+date=`date -d "next day" +%e | cut -d ' ' -f 2`
+
+#create the new cron job
+cjob="0 7-23 $date-31 * * /bin/bash -c \"/usr/bin/flock -n /tmp/cyb.lockfile -c $CYBPATH/get_cybytes.py 2>> $CYBPATH/cron_error >> $CYBPATH/cron_out\""
+
+#grep cron jobs other than the job created above and add them into the jobs file
+#remove empty lines
+crontab -l 2> /dev/null | grep -v "cybytes" | grep -v -e "^$" > $CYBPATH/cjobs.txt
+
+echo "$cjob" >> $CYBPATH/cjobs.txt
+
+#put an empty line at the end. dont know why but cron needs it to work properly!!!
+echo "" >> $CYBPATH/cjobs.txt
+
+#schedule the cron jobs from the file cybrary_cron.txt
+crontab $CYBPATH/cjobs.txt 2>> $CYBPATH/cron_out

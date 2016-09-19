@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CYBPATH="/home/networking/Desktop/ks/iiit/network_sec/cybrary"
+CYBPATH=""
 
 #get the next date
 date=`date -d "next day" +%e | cut -d ' ' -f 2`

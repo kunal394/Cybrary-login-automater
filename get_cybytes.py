@@ -78,12 +78,15 @@ def login(login_url, iurl, data, ua):
         out += "Error logging in!! Fetch Status: " + str(fstatus) + "\n"
         return (out, fstatus, cybytes)
     soup = BeautifulSoup(body.getvalue(), 'html.parser')
-    cybytes = int(soup.find("div", {"class": "cybytenumber"}).text.strip())
+    cybytes_list = soup.find_all("div", class_="cybytes")
+    totalcybytes = int(cybytes_list[0].text.strip())
+    cybytes = int(cybytes_list[1].text.strip())
     out += "Login Successful!!" + "\n"
-    return (out, cybytes)
+    return (out, totalcybytes)
 
 def main():
-    cybpath = <absolute_path_of_your_folder>
+    # e.g.: "/home/testuser/Cybrary-login-automater/"
+    cybpath = "<absolute_path_of_your_folder_with_slash_at_end>"
     logfile = cybpath + 'cybrary.log'
     schfile = cybpath + 'reschedule_jobs'
     last_cyb = fetch_last_cyb(logfile)

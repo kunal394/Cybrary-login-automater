@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-CYBPATH="/home/networking/Desktop/ks/iiit/network_sec/cybrary"
+#e.g.: "/home/testuser/Cybrary-login-automater"
+CYBPATH="<absolute_path_of_your_folder>"
 
 #get the next date
 date=`date -d "next day" +%e | cut -d ' ' -f 2`

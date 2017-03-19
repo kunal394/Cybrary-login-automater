@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+<<<<<<< HEAD
 #e.g.: "/home/testuser/Cybrary-login-automater"
 CYBPATH="<absolute_path_of_your_folder>"
+=======
+CYBPATH=""
+>>>>>>> 64e18754903c281bc236d44dac7ecd2be5f6a7cc
 
 #get the next date
 date=`date -d "next day" +%e | cut -d ' ' -f 2`

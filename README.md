@@ -1,5 +1,5 @@
 # Cybrary-login-automater
-Daily updates of cybytes, credits used on the website **<a href="https://www.cybrary.it/" target="_blank">Cybrary</a>**, through automated login using python and cronjob. — Edit
+Daily updates of cybytes, credits used on the website - **<a href="https://www.cybrary.it/" target="_blank">Cybrary</a>**, through automated login using python and cronjob.
 
 ## Instructions:
 > No installations required.

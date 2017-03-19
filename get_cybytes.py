@@ -93,12 +93,12 @@ def main():
     user = <your_username>
     password = <your_password>
     login_url = 'https://www.cybrary.it/wp-login.php'
-    iurl = 'https://www.cybrary.it/members/' + user + '/messages'
+    iurl = 'https://www.cybrary.it/'
     data = 'log=' + user + '&pwd=' + password + '&wp-submit=Log+In&redirect_to=&testcookie=1'
     ua = 'Mozilla/5.0 (Windows; U; Windows NT 6.1; it; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 (.NET CLR 3.5.30729)'
-    
+
+
     output = "Updating cybytes on " + time.strftime("%c") + "\n"
-    
     #check login
     out, cybytes = login(login_url, iurl, data, ua)
     output += out

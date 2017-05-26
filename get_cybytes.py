@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
 #import time, pycurl, cStringIO, subprocess, sys, requests
-import time, subprocess, sys, requests
+import time, subprocess, sys, requests, json
 from bs4 import BeautifulSoup
 
 cybpath = <absolute_path_of_the_directory_with_a_slash_at_end>
 logfile = cybpath + 'cybrary.log'
 schfile = cybpath + 'reschedule_jobs'
+conffile = cybpath + 'conf.json'
+user = ''
+password = ''
 
 def fetch_last_cyb():
     
@@ -19,13 +22,19 @@ def fetch_last_cyb():
         return cyb
     f.close()    
 
-last_cyb = fetch_last_cyb()
-user = <user_name>
-password = <password>
+def read_conf():
+
+    global user, password
+    with open(conffile) as f:
+        data = json.load(f)
+    f.close()
+    user = data['user']
+    password = data['password']
+
+read_conf()
 lurl = 'https://www.cybrary.it/wp-login.php/'
 turl = 'https://www.cybrary.it/api/verify-auth/'
 furl = 'https://www.cybrary.it/members/' + user + '/'
-data = 'log=' + user + '&pwd=' + password + '&wp-submit=Log+In&redirect_to=&testcookie=1'
 ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
 output = "Updating cybytes on " + time.strftime("%c") + "\n"
 
@@ -126,6 +135,8 @@ def fetch_cybytes(s):
 def main():
 
     global cybpath, logfile, schfile, last_cyb, user, password, lurl, turl, furl, data, ua, output
+    last_cyb = fetch_last_cyb()
+    read_conf()
     s, logged_in, soupl, out = login()
     cybytes = last_cyb
     output += out
@@ -137,12 +148,15 @@ def main():
     	    output += "Running Scheduler\n"
     	    subprocess.call(schfile)
     	    output += "Job Rescheduled\n"
-    	    output += "Cybytes: " + str(cybytes) + "\n"
     output += "Cybytes: " + str(cybytes) + "\n"
+    append_log(output)
+    return output
 
 def test_main():
 
     global cybpath, logfile, schfile, last_cyb, user, password, lurl, turl, furl, data, ua, output
+    last_cyb = fetch_last_cyb()
+    read_conf()
     s, logged_in, soupl, out = login()
     cybytes = last_cyb
     output += out
@@ -152,12 +166,9 @@ def test_main():
         if fetched:
             cybytes = cyb
     	    output += "Running Scheduler\n"
-    	    #subprocess.call(schfile)
     	    output += "Job Rescheduled\n"
-    	    output += "Cybytes: " + str(cybytes) + "\n"
     output += "Cybytes: " + str(cybytes) + "\n"
     return output
-    #append_log(output, logfile)
 
 if __name__ == '__main__':
     main()
